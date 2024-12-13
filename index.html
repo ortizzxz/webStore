@@ -30,10 +30,21 @@
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Roboto+Slab:wght@100..900&display=swap"
       rel="stylesheet"
     />
+
+    <!-- EMAILJS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      (function () {
+        emailjs.init("b6VJRE3_4wxGcsbIM"); 
+      })();
+    </script>
+
     <script src="script/script.js"></script>
   </head>
   <body>
-
     <!-- Header -->
     <header class="header">
       <div class="logo">
@@ -60,7 +71,7 @@
     </section>
 
     <!-- Modal de detalles del producto -->
-    <div id="productoModal" style="display: none;">
+    <div id="productoModal" style="display: none">
       <div id="productoModalContent">
         <div id="productoModalInfo">
           <h2 id="productoModalTitulo"></h2>
@@ -106,7 +117,9 @@
     <!-- Productos -->
     <section class="productos" id="productos">
       <h1 id="productoCategoriaTitulo">Productos de la Categoría</h1>
-      <h2 id="productoCategoriaError">Oops, no hemos encontrado productos en esa categoría...</h2>
+      <h2 id="productoCategoriaError">
+        Oops, no hemos encontrado productos en esa categoría...
+      </h2>
       <div id="productos-container" class="productos-container"></div>
     </section>
 
@@ -145,7 +158,13 @@
         <form id="registerForm">
           <div class="form-group">
             <label for="emailRegister">Correo electrónico</label>
-            <input type="email" id="emailRegister" name="email" required placeholder="example@example.com"/>
+            <input
+              type="email"
+              id="emailRegister"
+              name="email"
+              required
+              placeholder="example@example.com"
+            />
           </div>
           <div class="form-group">
             <label for="passwordRegister">Contraseña</label>

@@ -25,6 +25,8 @@ window.onload = () => {
   const carritoProductos = document.getElementById('carritoProductos');
   const carritoTotal = document.getElementById('carritoTotal');
   const noProductError = document.getElementById('productoCategoriaError');
+  const linkElement = document.getElementById('loginLink');
+  const registerElement = document.getElementById('registerLink');
 
   // === API Configuration ===
   const API_URL = "https://api.escuelajs.co/api/v1/products";
@@ -108,8 +110,8 @@ window.onload = () => {
 
   // Vacía el carrito al hacer clic en el botón correspondiente
   vaciarCarritoBtn.addEventListener('click', () => {
-    localStorage.removeItem('carrito'); // Elimina el carrito del almacenamiento local
-    carrito.length = 0; // Vacía el array del carrito
+    localStorage.removeItem('carrito');
+    carrito.length = 0; 
     actualizarCarritoCount(); // Actualiza el contador del carrito
     renderCarrito(); // Vuelve a renderizar el carrito (ahora vacío)
   });
@@ -121,7 +123,6 @@ window.onload = () => {
     if (sesionActiva) {
       const carritos = JSON.parse(localStorage.getItem('carritos')) || {};
       const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
-
       // Asociar el carrito actual al ID del usuario activo
       carritos[sesionActiva.id] = carritoActual;
       localStorage.setItem('carritos', JSON.stringify(carritos));
@@ -178,6 +179,7 @@ window.onload = () => {
 
   // Función para proceder al pago
   procederPagoBtn.addEventListener('click', () => {
+    limpiarCarrito(); // if enviamos correo carrito empty
     alert('Procediendo al pago...');
   });
 
@@ -335,9 +337,13 @@ window.onload = () => {
   // === Manejo de Modales y Navegación ===
 
   // Enlace para abrir el modal de login
-  document.getElementById('loginLink').addEventListener('click', (e) => {
+  loginLink.addEventListener('click', (e) => {
     e.preventDefault();  // Evitar que se recargue la página
-    document.getElementById('login').style.display = 'block';  // Mostrar modal de login
+    if(verificarSesionActiva()){
+      cerrarSesion();
+    }else{
+      document.getElementById('login').style.display = 'block';  // Mostrar modal de login
+    }
   });
 
   // Enlace para abrir el modal de registro
@@ -393,25 +399,22 @@ window.onload = () => {
   // === Funciones de Manejo de Usuarios ===
 
   // Función para registrar un usuario
-  const registrarUsuario = (email, password, name) => {
+  const registrarUsuario = (email, password) => {
     const usuarios = JSON.parse(localStorage.getItem('usuarios')) || []; // Obtener usuarios almacenados
     const existeUsuario = usuarios.some(usuario => usuario.email === email); // Verificar si ya existe
 
     if (existeUsuario) {
-      alert('El correo ya está registrado.');
       return false;
     }
 
     // Crear nuevo usuario y almacenarlo
-    const nuevoUsuario = { id: Date.now(), email, password, name };
+    const nuevoUsuario = { id: Date.now(), email, password };
     usuarios.push(nuevoUsuario);
-    // sendRegistrationEmail(email); // FAILED
+    sendRegistrationEmail(email, password);
     localStorage.setItem('usuarios', JSON.stringify(usuarios)); // Guardar en localStorage
-    alert('¡Usuario registrado con éxito!');
     return true;
   };
 
-  // Función para iniciar sesión
   // Función para iniciar sesión
   const iniciarSesion = (email, password) => {
     const usuarios = JSON.parse(localStorage.getItem('usuarios')) || []; // Obtener usuarios almacenados
@@ -430,7 +433,7 @@ window.onload = () => {
     // Guardar sesión activa
     localStorage.setItem(
       'sesionActiva',
-      JSON.stringify({ id: usuario.id, email: usuario.email, name: usuario.name })
+      JSON.stringify({ id: usuario.id, email: usuario.email })
     );
 
     // Cargar el carrito del usuario si existe
@@ -438,16 +441,66 @@ window.onload = () => {
     const carritoUsuario = carritos[usuario.id] || []; // Si no hay carrito, inicializa uno vacío
     localStorage.setItem('carrito', JSON.stringify(carritoUsuario)); // Cargar su carrito en localStorage
 
-    alert(`¡Bienvenido, ${usuario.name}!`);
     location.reload();
     actualizarCarritoCount(); // Actualizar el contador del carrito
     renderCarrito(); // Renderizar el carrito cargado
     return true;
   };
 
+  // Función para obtener el correo del usuario actual
+  function obtenerCorreo() {
+    // Obtener el objeto almacenado en localStorage
+    const sesionActiva = JSON.parse(localStorage.getItem('sesionActiva'));
+
+    // Comprobar si la sesión está activa y obtener el correo
+    if (sesionActiva) {
+      const correo = sesionActiva.email;
+      return correo;
+    } else {
+      return null;
+    }
+  }
+
+  // Función para obtener el carrito del usuario actual
+  function obtenerCarrito() {
+    // Obtener el objeto almacenado en localStorage
+    const carrito = JSON.parse(localStorage.getItem('carrito'));
+    if (carrito) {
+      let total = 0;
+      carrito.forEach(p => {
+        total += p.price;
+      })
+      return total;
+    } else {
+      return null;
+    }
+  }
+
+  // Funcion para limpiar el carrito
+  function limpiarCarrito() {
+      const sesionActiva = JSON.parse(localStorage.getItem('sesionActiva'));
+      const carritos = JSON.parse(localStorage.getItem('carritos')) || {};
+    
+      if (sesionActiva) {
+        const usuarioId = sesionActiva.id;
+        
+        if (carritos[usuarioId]) {
+          carritos[usuarioId] = [];
+    
+          localStorage.setItem('carritos', JSON.stringify(carritos));
+    
+          renderCarrito();
+          actualizarCarritoCount();
+        }
+      }
+  }
+  
+  
   // Función para cerrar sesión
   const cerrarSesion = () => {
     const sesionActiva = JSON.parse(localStorage.getItem('sesionActiva'));
+    registerLink.style.display = 'inline';
+    linkElement.innerHTML = 'Log In';
 
     if (sesionActiva) {
       const carritos = JSON.parse(localStorage.getItem('carritos')) || {};
@@ -461,10 +514,11 @@ window.onload = () => {
       localStorage.removeItem('sesionActiva');
       localStorage.removeItem('carrito');
 
-      alert('Sesión cerrada.');
       actualizarCarritoCount(); // Actualizar el contador del carrito
       renderCarrito(); // Limpiar la vista del carrito
     }
+
+    location.reload();
   };
 
   // === Manejadores de Formularios ===
@@ -479,7 +533,6 @@ window.onload = () => {
     const name = 'Usuario'; // Puedes cambiar esto para obtener el nombre desde el formulario
 
     if (password !== confirmPassword) {
-      alert('Las contraseñas no coinciden.');
       return;
     }
 
@@ -503,8 +556,8 @@ window.onload = () => {
     const sesion = JSON.parse(localStorage.getItem('sesionActiva'));
 
     if (sesion) {
-      alert(`¡Bienvenido nuevamente, ${sesion.name}!`);
-
+      linkElement.innerHTML = 'Log Out';
+      registerElement.style.display = 'none';
       // Cargar el carrito del usuario activo si existe
       const carritos = JSON.parse(localStorage.getItem('carritos')) || {};
       const carritoUsuario = carritos[sesion.id] || [];
@@ -512,7 +565,11 @@ window.onload = () => {
       localStorage.setItem('carrito', JSON.stringify(carritoUsuario)); // Cargar su carrito en localStorage
       actualizarCarritoCount();
       renderCarrito();
+
+      return true;
     }
+
+    return false;
   };
 
   // Botón para cerrar sesión
@@ -523,22 +580,37 @@ window.onload = () => {
   window.addEventListener('scroll', handleScroll); // Manejar scroll infinito
   actualizarCarritoCount(); // Actualizar el contador del carrito
 
-  //   const sendRegistrationEmail = (userEmail) => {
-  //     emailjs.send(
-  //       'service_hpvmlo8', // Service ID
-  //       'template_osp2oha', // Template ID
-  //       {
-  //         user_email: userEmail
-  //       },
-  //       'b6VJRE3_4wxGcsbIM' // Public Key
-  //     )
-  //       .then(response => {
-  //         console.log('Correo enviado:', response.status, response.text);
-  //       })
-  //       .catch(err => {
-  //         console.error('Error al enviar el correo:', err);
-  //       });
-  //   };
+  // Function to send email after registration
+  function sendRegistrationEmail(userEmail, userPassword) {
+    const templateParams = {
+      user_email: userEmail,
+      user_password: userPassword
+    };
+
+    emailjs.send('service_hpvmlo8', 'template_osp2oha', templateParams)
+      .then(response => {
+        console.log('Registration email sent successfully!', response.status, response.text);
+      })
+      .catch(error => {
+        console.error('Failed to send registration email:', error);
+      });
+  }
+
+  // Function to send email after registration
+  function sendShopEmail(userEmail, totalPrice) {
+    const templateParams = {
+      email: userEmail,
+      total: totalPrice
+    };
+
+    emailjs.send('service_hpvmlo8', 'template_dsidb8r', templateParams)
+      .then(response => {
+        console.log('Registration email sent successfully!', response.status, response.text);
+      })
+      .catch(error => {
+        console.error('Failed to send registration email:', error);
+      });
+  }
 };
 
 // Funcion Default para obtener una imagen cuando recibo una con error
