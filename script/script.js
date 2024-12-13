@@ -22,6 +22,7 @@ window.onload = () => {
   const productoModal = document.getElementById('productoModal');
   const carritoProductos = document.getElementById('carritoProductos');
   const carritoTotal = document.getElementById('carritoTotal');
+  const noProductError = document.getElementById('productoCategoriaError');
 
   // === API Configuration ===
   const API_URL = "https://api.escuelajs.co/api/v1/products";
@@ -52,18 +53,39 @@ window.onload = () => {
     } else {
       // Si hay productos, genera el HTML para mostrarlos
       carritoProductos.innerHTML = carrito.map(producto => `
-      <div class="producto-carrito">
-        <p><span id='productoTitleCarrito'>${producto.title}</span> - $${producto.price.toFixed(2)} x ${producto.cantidad}</p>
-      </div>
-    `).join('');  
+        <div class="producto-carrito">
+          <p><span id='productoTitleCarrito'>${producto.title}</span> - $${producto.price.toFixed(2)} x ${producto.cantidad}</p>
+          <button class="btn-eliminar" data-id="${producto.id}">Descartar</button>
+        </div>
+      `).join('');
+
+      // Maneja la eliminación de un producto del carrito
+      function eliminarProductoHandler(e) {
+        if (e.target.classList.contains('btn-eliminar')) {
+          const productoId = e.target.getAttribute('data-id');
+          const productoIndex = carrito.findIndex(producto => producto.id == productoId);
+
+          if (productoIndex > -1) {
+            // Elimina el producto del carrito
+            carrito.splice(productoIndex, 1);
+            localStorage.setItem('carrito', JSON.stringify(carrito)); // Actualiza el almacenamiento local
+            renderCarrito(); // Vuelve a renderizar el carrito
+            actualizarCarritoCount(); // Actualiza el contador del carrito
+          }
+        }
+      }
+
+      // Asigna el evento al contenedor principal
+      carritoProductos.addEventListener('click', eliminarProductoHandler);
 
       // Calcula el total del carrito y lo muestra
       const total = carrito.reduce((total, producto) => total + producto.price * producto.cantidad, 0);
       carritoTotal.innerHTML = `Total: $${total.toFixed(2)}`;
     }
 
-    // Agregar un evento de delegación para eliminar productos
+    // evento delegado
     carritoProductos.addEventListener('click', eliminarProductoHandler);
+
   };
 
   // Cierra el modal del producto al hacer clic en el botón correspondiente
@@ -71,22 +93,6 @@ window.onload = () => {
     e.preventDefault();
     productoModal.style.display = 'none';
   });
-
-  // Maneja la eliminación de un producto del carrito
-  function eliminarProductoHandler(e) {
-    if (e.target.classList.contains('btn-eliminar')) {
-      const productoId = parseInt(e.target.getAttribute('data-id'));
-      const productoIndex = carrito.findIndex(producto => producto.id === productoId);
-
-      if (productoIndex > -1) {
-        // Elimina el producto del carrito
-        carrito.splice(productoIndex, 1);
-        localStorage.setItem('carrito', JSON.stringify(carrito)); // Actualiza el almacenamiento local
-        renderCarrito(); // Vuelve a renderizar el carrito
-        actualizarCarritoCount(); // Actualiza el contador del carrito
-      }
-    }
-  }
 
   // Abre el carrito al hacer clic en el enlace correspondiente
   carritoLink.addEventListener('click', (e) => {
@@ -109,16 +115,39 @@ window.onload = () => {
   });
 
   // Función para añadir un producto al carrito
+  const guardarCarritoUsuarioActivo = () => {
+    const sesionActiva = JSON.parse(localStorage.getItem('sesionActiva'));
+    
+    if (sesionActiva) {
+      const carritos = JSON.parse(localStorage.getItem('carritos')) || {};
+      const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
+      
+      // Asociar el carrito actual al ID del usuario activo
+      carritos[sesionActiva.id] = carritoActual;
+      localStorage.setItem('carritos', JSON.stringify(carritos));
+    }
+  };
+  
+  // Modifica las funciones que afectan al carrito para llamar a esta función:
   const anadirAlCarrito = (producto) => {
     const productoExistente = carrito.find(item => item.id === producto.id);
+    
     if (productoExistente) {
       productoExistente.cantidad += 1;
     } else {
       carrito.push({ ...producto, cantidad: 1 });
     }
+    
     localStorage.setItem('carrito', JSON.stringify(carrito));
+    guardarCarritoUsuarioActivo(); // Guardar cambios asociados al usuario activo
     actualizarCarritoCount();
   };
+  
+  vaciarCarritoBtn.addEventListener('click', () => {
+    localStorage.removeItem('carrito'); 
+    carrito.length = 0; 
+    guardarCarritoUsuarioActivo(); // Guardar cambios asociados al usuario activo
+  });
 
   // Función para obtener los productos
   const fetchProductos = async (categoriaSeleccionada) => {
@@ -129,10 +158,14 @@ window.onload = () => {
       const productos = await response.json();
       const productosNuevos = productos.filter(producto => !productosCargados.includes(producto.id));
       if (productosNuevos.length > 0) {
+        noProductError.style.display = 'none';
         renderProductos(productosNuevos, true); // Usa true para append
         productosNuevos.forEach(producto => productosCargados.push(producto.id));
         offset += LIMIT;
-      } else {
+      } else if (productosCargados.length <= 0) {
+        noProductError.style.display = 'grid'; // si no hay productos envio el mensaje
+      }
+      else {
         window.onscroll = null; // Desactivar el scroll infinito
       }
     } catch (error) {
@@ -168,6 +201,7 @@ window.onload = () => {
 
   // === Función para renderizar los productos en la página ===
   const renderProductos = (productos, append = false) => {
+    console.log(productos);
     // Generar el HTML de los productos a partir de los datos de la API
     const productosHTML = productos.map(producto => `
     <div class="producto" data-id="${producto.id}">
@@ -259,6 +293,7 @@ window.onload = () => {
           price: parseFloat(event.target.dataset.price),
           images: event.target.dataset.images,
         };
+        alert('Producto añadido al carrito');
         anadirAlCarrito(producto); // Añadir producto al carrito
         renderCarrito(); // Actualizar la vista del carrito
       });
@@ -376,6 +411,7 @@ window.onload = () => {
   };
 
   // Función para iniciar sesión
+  // Función para iniciar sesión
   const iniciarSesion = (email, password) => {
     const usuarios = JSON.parse(localStorage.getItem('usuarios')) || []; // Obtener usuarios almacenados
     const usuario = usuarios.find(usuario => usuario.email === email); // Buscar usuario
@@ -395,14 +431,39 @@ window.onload = () => {
       'sesionActiva',
       JSON.stringify({ id: usuario.id, email: usuario.email, name: usuario.name })
     );
+
+    // Cargar el carrito del usuario si existe
+    const carritos = JSON.parse(localStorage.getItem('carritos')) || {};
+    const carritoUsuario = carritos[usuario.id] || []; // Si no hay carrito, inicializa uno vacío
+    localStorage.setItem('carrito', JSON.stringify(carritoUsuario)); // Cargar su carrito en localStorage
+
     alert(`¡Bienvenido, ${usuario.name}!`);
+    location.reload();
+    actualizarCarritoCount(); // Actualizar el contador del carrito
+    renderCarrito(); // Renderizar el carrito cargado
     return true;
   };
 
   // Función para cerrar sesión
   const cerrarSesion = () => {
-    localStorage.removeItem('sesionActiva'); // Eliminar sesión activa
-    alert('Sesión cerrada.');
+    const sesionActiva = JSON.parse(localStorage.getItem('sesionActiva'));
+
+    if (sesionActiva) {
+      const carritos = JSON.parse(localStorage.getItem('carritos')) || {};
+      const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
+
+      // Asociar el carrito actual al ID del usuario
+      carritos[sesionActiva.id] = carritoActual;
+      localStorage.setItem('carritos', JSON.stringify(carritos)); // Guardar todos los carritos
+
+      // Limpiar la sesión activa y el carrito actual
+      localStorage.removeItem('sesionActiva');
+      localStorage.removeItem('carrito');
+
+      alert('Sesión cerrada.');
+      actualizarCarritoCount(); // Actualizar el contador del carrito
+      renderCarrito(); // Limpiar la vista del carrito
+    }
   };
 
   // === Manejadores de Formularios ===
@@ -438,10 +499,18 @@ window.onload = () => {
 
   // === Verificar Sesión Activa ===
   const verificarSesionActiva = () => {
-    const sesion = JSON.parse(localStorage.getItem('sesionActiva')); // Verificar si hay una sesión activa
-
+    const sesion = JSON.parse(localStorage.getItem('sesionActiva')); 
+  
     if (sesion) {
       alert(`¡Bienvenido nuevamente, ${sesion.name}!`);
+  
+      // Cargar el carrito del usuario activo si existe
+      const carritos = JSON.parse(localStorage.getItem('carritos')) || {};
+      const carritoUsuario = carritos[sesion.id] || [];
+      
+      localStorage.setItem('carrito', JSON.stringify(carritoUsuario)); // Cargar su carrito en localStorage
+      actualizarCarritoCount();
+      renderCarrito();
     }
   };
 

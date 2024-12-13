@@ -33,6 +33,7 @@
     <script src="script/script.js"></script>
   </head>
   <body>
+
     <!-- Header -->
     <header class="header">
       <div class="logo">
@@ -59,18 +60,17 @@
     </section>
 
     <!-- Modal de detalles del producto -->
-<div id="productoModal" style="display: none;">
-  <div id="productoModalContent">
-    <div id="productoModalInfo">
-      <h2 id="productoModalTitulo"></h2>
-      <p id="productoModalDescripcion"></p>
-      <p id="productoModalPrecio"></p>
-      <button id="productoModalCerrarBtn">Cerrar Descripción</button>
-      <button id="productoModalCarritoBtn">Añadir al carrito</button>
+    <div id="productoModal" style="display: none;">
+      <div id="productoModalContent">
+        <div id="productoModalInfo">
+          <h2 id="productoModalTitulo"></h2>
+          <p id="productoModalDescripcion"></p>
+          <p id="productoModalPrecio"></p>
+          <button id="productoModalCerrarBtn">Cerrar Descripción</button>
+          <button id="productoModalCarritoBtn">Añadir al carrito</button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
 
     <!-- Categorías -->
     <section class="categorias" id="categorias">
@@ -106,11 +106,11 @@
     <!-- Productos -->
     <section class="productos" id="productos">
       <h1 id="productoCategoriaTitulo">Productos de la Categoría</h1>
+      <h2 id="productoCategoriaError">Oops, no hemos encontrado productos en esa categoría...</h2>
       <div id="productos-container" class="productos-container"></div>
     </section>
 
     <!-- Sección de Login -->
-     <div>
     <section class="login" id="login" style="display: none">
       <h1>Iniciar Sesión</h1>
       <form id="loginForm">
