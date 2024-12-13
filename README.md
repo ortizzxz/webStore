@@ -13,9 +13,9 @@
 - JavaScript (ES6+)
 - API Platzi Fake Store
 
-## Uso
+## Uso - Visualización
 Visita la versión en producción para explorar la tienda de películas en línea.
-- [API Platzi Fake Store](https://ortizzxz.github.io/webStore/)
+- [WebStore](https://ortizzxz.github.io/webStore/)
 
 ### Este proyecto utiliza la API Platzi Fake Store para simular un comercio electrónico
 - Autenticación 
