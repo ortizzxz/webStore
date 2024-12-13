@@ -1,3 +1,5 @@
+// import emailjs from 'emailjs-com';
+
 window.onload = () => {
   // === DOM Elements ===
   // Buttons and Links
@@ -83,8 +85,6 @@ window.onload = () => {
       carritoTotal.innerHTML = `Total: $${total.toFixed(2)}`;
     }
 
-    // evento delegado
-    carritoProductos.addEventListener('click', eliminarProductoHandler);
 
   };
 
@@ -117,35 +117,35 @@ window.onload = () => {
   // Función para añadir un producto al carrito
   const guardarCarritoUsuarioActivo = () => {
     const sesionActiva = JSON.parse(localStorage.getItem('sesionActiva'));
-    
+
     if (sesionActiva) {
       const carritos = JSON.parse(localStorage.getItem('carritos')) || {};
       const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
-      
+
       // Asociar el carrito actual al ID del usuario activo
       carritos[sesionActiva.id] = carritoActual;
       localStorage.setItem('carritos', JSON.stringify(carritos));
     }
   };
-  
+
   // Modifica las funciones que afectan al carrito para llamar a esta función:
   const anadirAlCarrito = (producto) => {
     const productoExistente = carrito.find(item => item.id === producto.id);
-    
+
     if (productoExistente) {
       productoExistente.cantidad += 1;
     } else {
       carrito.push({ ...producto, cantidad: 1 });
     }
-    
+
     localStorage.setItem('carrito', JSON.stringify(carrito));
     guardarCarritoUsuarioActivo(); // Guardar cambios asociados al usuario activo
     actualizarCarritoCount();
   };
-  
+
   vaciarCarritoBtn.addEventListener('click', () => {
-    localStorage.removeItem('carrito'); 
-    carrito.length = 0; 
+    localStorage.removeItem('carrito');
+    carrito.length = 0;
     guardarCarritoUsuarioActivo(); // Guardar cambios asociados al usuario activo
   });
 
@@ -405,6 +405,7 @@ window.onload = () => {
     // Crear nuevo usuario y almacenarlo
     const nuevoUsuario = { id: Date.now(), email, password, name };
     usuarios.push(nuevoUsuario);
+    // sendRegistrationEmail(email); // FAILED
     localStorage.setItem('usuarios', JSON.stringify(usuarios)); // Guardar en localStorage
     alert('¡Usuario registrado con éxito!');
     return true;
@@ -499,15 +500,15 @@ window.onload = () => {
 
   // === Verificar Sesión Activa ===
   const verificarSesionActiva = () => {
-    const sesion = JSON.parse(localStorage.getItem('sesionActiva')); 
-  
+    const sesion = JSON.parse(localStorage.getItem('sesionActiva'));
+
     if (sesion) {
       alert(`¡Bienvenido nuevamente, ${sesion.name}!`);
-  
+
       // Cargar el carrito del usuario activo si existe
       const carritos = JSON.parse(localStorage.getItem('carritos')) || {};
       const carritoUsuario = carritos[sesion.id] || [];
-      
+
       localStorage.setItem('carrito', JSON.stringify(carritoUsuario)); // Cargar su carrito en localStorage
       actualizarCarritoCount();
       renderCarrito();
@@ -522,9 +523,26 @@ window.onload = () => {
   window.addEventListener('scroll', handleScroll); // Manejar scroll infinito
   actualizarCarritoCount(); // Actualizar el contador del carrito
 
+  //   const sendRegistrationEmail = (userEmail) => {
+  //     emailjs.send(
+  //       'service_hpvmlo8', // Service ID
+  //       'template_osp2oha', // Template ID
+  //       {
+  //         user_email: userEmail
+  //       },
+  //       'b6VJRE3_4wxGcsbIM' // Public Key
+  //     )
+  //       .then(response => {
+  //         console.log('Correo enviado:', response.status, response.text);
+  //       })
+  //       .catch(err => {
+  //         console.error('Error al enviar el correo:', err);
+  //       });
+  //   };
 };
 
 // Funcion Default para obtener una imagen cuando recibo una con error
 function defaultImage(e) {
   e.target.src = './assets/imgs/noImage.png';
 }
+
