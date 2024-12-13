@@ -179,8 +179,11 @@ window.onload = () => {
 
   // Función para proceder al pago
   procederPagoBtn.addEventListener('click', () => {
-    limpiarCarrito(); // if enviamos correo carrito empty
     alert('Procediendo al pago...');
+    localStorage.removeItem('carrito');
+    carrito.length = 0; 
+    actualizarCarritoCount(); // Actualiza el contador del carrito
+    renderCarrito(); // Vuelve a renderizar el carrito (ahora vacío)
   });
 
   // Función para mostrar los detalles del producto en el modal
@@ -475,26 +478,6 @@ window.onload = () => {
       return null;
     }
   }
-
-  // Funcion para limpiar el carrito
-  function limpiarCarrito() {
-      const sesionActiva = JSON.parse(localStorage.getItem('sesionActiva'));
-      const carritos = JSON.parse(localStorage.getItem('carritos')) || {};
-    
-      if (sesionActiva) {
-        const usuarioId = sesionActiva.id;
-        
-        if (carritos[usuarioId]) {
-          carritos[usuarioId] = [];
-    
-          localStorage.setItem('carritos', JSON.stringify(carritos));
-    
-          renderCarrito();
-          actualizarCarritoCount();
-        }
-      }
-  }
-  
   
   // Función para cerrar sesión
   const cerrarSesion = () => {
