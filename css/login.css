@@ -1,0 +1,173 @@
+@import './variables.css';
+/* Estilo del formulario de registro */
+#register {
+    background-color: #696969;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(255, 255, 255,1);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: 80%; /* Ancho relativo al contenedor */
+    max-width: 30rem; /* Máximo ancho */
+    text-align: center;
+    border: 1px solid black;
+
+}
+
+#register form {
+    display: flex;
+    flex-direction: column;
+}
+
+#register label {
+    margin: 0.5rem 0;
+}
+
+#register input {
+    margin: 1rem 0;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    width: 100%;
+}
+
+#register label{
+  font-size: 1.3rem;
+}
+
+#register button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#closeRegister {
+    background-color: #f44336;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+#register button:hover {
+    background-color: #45a049;
+}
+
+#register #closeRegister {
+    background-color: #f44336;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+#register #closeRegister:hover {
+    background-color: #e53935;
+}
+
+/* Estilo del formulario de login */
+#login {
+    background-color: #696969;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(255, 255, 255, 1);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: 80%; /* Ancho relativo al contenedor */
+    max-width: 30rem; /* Máximo ancho */
+    text-align: center;
+    border: 1px solid black;
+}
+
+#login form {
+    display: flex;
+    flex-direction: column;
+}
+
+#login label {
+    margin: 0.5rem 0;
+}
+
+#login input {
+    margin: 1rem 0;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+}
+
+#login button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#login button:hover {
+    background-color: #45a049;
+}
+
+#login #closeLogin {
+    background-color: #f44336;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+#login #closeLogin:hover {
+    background-color: #e53935;
+}
+
+/* Responsive Design */
+
+/* Pantallas grandes */
+@media (min-width: 768px) {
+    #register, #login {
+        width: 40%; /* Ancho más grande en pantallas grandes */
+    }
+}
+
+/* Pantallas pequeñas */
+@media (max-width: 768px) {
+    #register, #login {
+        width: 85%; /* Ancho más pequeño en pantallas pequeñas */
+    }
+
+    #register button, #login button, #closeRegister {
+        padding: 1rem 2rem; /* Botones más grandes en pantallas pequeñas */
+    }
+
+    #register input, #login input {
+        padding: 1rem; /* Ajuste en el padding para mejorar la interacción en pantallas táctiles */
+    }
+
+    /* Reducir el tamaño de las fuentes en móviles */
+    #register label, #login label {
+        font-size: 0.9rem;
+    }
+
+    #register button, #login button, #closeRegister {
+        font-size: 1rem; /* Ajuste en el tamaño de fuente para los botones en móviles */
+    }
+}

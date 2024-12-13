@@ -1,0 +1,11 @@
+:root {
+    --primary-color: black; /* Blanco */
+    --secondary-color: white; /* Gris oscuro */
+    --third-color: #eedfdf; /* Gris claro */
+    --accent-color: #000; /* Negro */
+    --font-family-main: "Quicksand", sans-serif;
+    --font-family-title: "Helvetica", sans-serif;
+    --spacing: 1rem;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+  }
+  

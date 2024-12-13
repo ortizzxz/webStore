@@ -1,0 +1,126 @@
+@import './variables.css';
+
+/* Estilos para el carrito */
+.carrito {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8); /* Fondo más oscuro */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+}
+
+.carrito-contenedor {
+    background: var(--secondary-color);
+    width: 60%;
+    padding: 25px;
+    border-radius: 15px; /* Bordes más suaves */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.carrito h2 {
+    margin: 0;
+    font-size: 26px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--primary-color);
+    font-weight: bold;
+    border-bottom: 2px solid var(--third-color); /* Separador */
+    padding-bottom: 10px;
+}
+
+
+.carrito-productos {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px; /* Espacio para el scroll */
+    scrollbar-width: thin; /* Estilo del scrollbar */
+    scrollbar-color: var(--primary-color) var(--secondary-color);
+    font-size: x-large;
+}
+
+#productoTitleCarrito{
+    font-weight: 600;
+}
+
+.carrito-productos::-webkit-scrollbar {
+    width: 6px;
+}
+
+.carrito-productos::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 3px;
+}
+
+.carrito-productos::-webkit-scrollbar-track {
+    background-color: var(--secondary-color);
+}
+
+.carrito-total {
+    margin-top: 20px;
+    text-align: center;
+    padding-top: 10px;
+    border-top: 2px solid var(--third-color); /* Separador superior */
+}
+
+.carrito-total p {
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin: 0.2rem 0;
+}
+
+
+.carrito-total .btn-vaciar,
+.carrito-total .btn-pago {
+    margin-top: 10px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 25px; /* Botones redondeados */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* Animaciones */
+}
+
+.carrito-total .btn-vaciar {
+    background-color: red;
+}
+
+.carrito-total .btn-pago {
+    background-color: green;
+}
+
+.carrito-total button:hover {
+    transform: scale(1.02);
+}
+
+#cerrarCarrito {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: var(--text-color);
+    border: none;
+    font-size: 22px;
+    padding: 0.5rem 1rem;
+    border-radius: 50%; /* Botón circular */
+    cursor: pointer;
+    background-color: var(--third-color);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#cerrarCarrito:hover {
+    transform: scale(1.02);
+    background-color: red;
+    color: white;
+    transform: rotate(180deg); /* Animación de rotación */
+}

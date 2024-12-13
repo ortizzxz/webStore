@@ -1,0 +1,120 @@
+@import './variables.css';
+
+.síguenos {
+  text-align: center;
+  padding: 3rem;
+  background-color: var(--third-color);
+  color: var(--primary-color);
+}
+
+.síguenos h1 {
+  font-size: 2.5rem;
+  font-weight: 200;
+}
+
+.síguenos p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+#siguenosForm {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  max-width: 37.5rem;
+  margin: 0 auto;
+  background-color: var(--secondary-color);
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.625rem var(--shadow-color);
+  gap: 0;
+}
+
+#siguenosForm input[type="email"] {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 0.0625rem solid var(--primary-color);
+  background-color: #f5f5f5;
+  color: var(--primary-color);
+  outline: none;
+  transition: border-color 0.3s ease;
+  border-radius: 1rem 0 0 1rem;
+}
+
+#siguenosForm input[type="email"]:focus {
+  border-color: var(--primary-color);
+}
+
+#siguenosForm button {
+  background-color: var(--third-color);
+  color: var(--primary-color);
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 0 1rem 1rem 0;
+
+}
+
+#siguenosForm button:hover {
+  transform: scale(1.05); /* Efecto de aumentar el tamaño al hacer hover */
+  transition: 0.3s ease;
+
+}
+
+/* Media Queries for Mobile Devices */
+@media screen and (max-width: 768px) {
+  .síguenos h1 {
+    font-size: 2rem; /* Reduce font size for tablets */
+  }
+
+  .síguenos p {
+    font-size: 1rem; /* Smaller font size for tablets */
+  }
+
+  #siguenosForm {
+    padding: 1rem; /* Reduce padding on tablets */
+    max-width: 90%; /* Allow more flexible width on tablets */
+    grid-template-columns: 1fr; /* Stack form elements vertically */
+  }
+
+  #siguenosForm input[type="email"] {
+    font-size: 0.9rem; /* Slightly smaller input font */
+    padding: 0.65rem; /* Reduce input padding for smaller screens */
+  }
+
+  #siguenosForm button {
+    font-size: 0.9rem; /* Smaller button font */
+    padding: 0.65rem; /* Reduce button padding */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .síguenos {
+    padding: 2rem; /* Reduce padding for very small screens */
+  }
+
+  .síguenos h1 {
+    font-size: 1.8rem; /* Even smaller title font size */
+  }
+
+  .síguenos p {
+    font-size: 0.9rem; /* Further reduce paragraph font size */
+  }
+
+  #siguenosForm {
+    padding: 1rem; /* Even smaller padding for very small screens */
+    max-width: 100%; /* Full width on very small screens */
+    grid-template-columns: 1fr; /* Stack form elements vertically */
+  }
+
+  #siguenosForm input[type="email"] {
+    font-size: 0.85rem; /* Smaller input font for very small screens */
+    padding: 0.5rem; /* Even smaller padding */
+  }
+
+  #siguenosForm button {
+    font-size: 0.85rem; /* Smaller button font */
+    padding: 0.5rem; /* Smaller button padding */
+  }
+}

@@ -1,0 +1,95 @@
+@import './variables.css';
+
+.header {
+  display: flex;
+  justify-content: space-between; /* Alinear elementos a los extremos */
+  align-items: center;
+  padding: 0 var(--spacing);
+  background-color: var(--secondary-color);
+  border-bottom: 0.0625rem solid var(--primary-color);
+  font-family: var(--font-family-main);
+}
+
+.header .logo a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 1.3rem; /* Reducir tamaño del logo */
+}
+
+.header .logo a h1{
+  font-weight: 400;
+}
+
+nav {
+  display: flex;
+  gap: var(--spacing);
+  justify-content: flex-end; /* Alinear los enlaces a la derecha */
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex; /* Usar flex para alinear horizontalmente los enlaces */
+  gap: var(--spacing);
+}
+
+nav ul li a {
+  color: var(--primary-color);
+  text-decoration: none;
+  padding: var(--spacing);
+  border-radius: 0.25rem;
+  font-weight: bold;
+  transition: color 0.3s;
+  font-size: 1.3rem;
+}
+
+nav ul li a:hover {
+  background-color: var(--third-color);
+}
+
+/* Media Queries for Mobile Devices */
+
+/* For Tablets (max-width: 768px) */
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 1rem; /* Reducir el padding del header en tabletas */
+  }
+
+  .header .logo a {
+    font-size: 1.2rem; /* Reducir tamaño del logo en tabletas */
+  }
+
+  nav {
+    gap: 1rem; /* Reducir el gap entre los enlaces en dispositivos más pequeños */
+  }
+
+  nav ul {
+    gap: 0.5rem; /* Reducir el espacio entre los enlaces en pantallas pequeñas */
+  }
+
+  nav ul li a {
+    font-size: 1rem; /* Ajustar tamaño de fuente de los enlaces en tablets */
+    padding: 0.5rem 1rem; /* Reducir el padding de los enlaces */
+  }
+}
+
+/* For Mobile (max-width: 480px) */
+@media screen and (max-width: 480px) {
+  .header {
+    padding: 0.5rem; /* Reducir aún más el padding en pantallas más pequeñas */
+    display: block;
+  }
+
+  .header .logo a {
+    font-size: 1.1rem; /* Hacer el logo más pequeño en móviles */
+  }
+
+  nav ul li a {
+    font-size: 0.9rem; /* Reducir aún más el tamaño de los enlaces */
+    padding: 0.5rem 0.8rem; /* Reducir padding para los enlaces */
+  }
+
+  nav {
+    gap: 0.5rem; /* Ajustar el espacio entre enlaces */
+  }
+  
+}

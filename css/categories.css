@@ -1,0 +1,48 @@
+@import './variables.css';
+.categorias {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: var(--spacing);
+  padding: 3rem 2rem;
+}
+
+.categoria {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Asegura que el contenido se alinee correctamente */
+  max-height: 18rem; /* Limita la altura máxima del contenedor */
+  text-align: center;
+  background-color: var(--third-color);
+  padding: var(--spacing);
+  border-radius: 0.75rem;
+  box-shadow: 0 0.25rem 0.625rem var(--shadow-color);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.categoria:hover {
+  transform: translateY(-0.3125rem);
+  box-shadow: 0 0.375rem 0.9375rem var(--shadow-color);
+}
+
+.categoria img {
+  width: 100%; /* Asegura que la imagen ocupe todo el ancho */
+  height: 12rem; /* Altura fija para que todas las imágenes tengan el mismo tamaño */
+  object-fit: cover; /* Las imágenes cubren el área del contenedor sin distorsionarse */
+  border-radius: 0.5rem;
+}
+
+.categoria h3 {
+  margin-top: var(--spacing);
+  font-size: 2rem;
+  color: var(--primary-color);
+  font-weight: 400;
+  text-align: center;
+}
+
+/* Para tabletas (max-width: 768px) */
+@media (max-width: 768px) {
+  .categorias {
+    padding: 1rem;
+  }
+}

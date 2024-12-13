@@ -1,0 +1,142 @@
+
+@import './variables.css';
+
+#productoModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  color: black;
+  overflow: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#productoModal.show {
+  display: flex;
+  opacity: 1;
+  visibility: visible;
+}
+
+#productoModalContent {
+  background-color: var(--third-color);
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  max-width: 90%;
+  margin: 1rem auto;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+#productoModalInfo {
+  text-align: center;
+}
+
+#productoModalImagen {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+#productoModalTitulo {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+#productoModalDescripcion {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: var(--first-color);
+}
+
+#productoModalPrecio {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #28a745;
+}
+
+#productoModalCarritoBtn, #productoModalCerrarBtn {
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+#productoModalCarritoBtn {
+  background-color: #28a745;
+}
+
+#productoModalCarritoBtn:hover {
+  background-color: #218838;
+}
+
+#productoModalCerrarBtn {
+  background-color: #dc3545;
+}
+
+#productoModalCerrarBtn:hover {
+  background-color: #c82333;
+}
+
+/* Responsive Design */
+
+/* Para pantallas de tabletas (max-width: 768px) */
+@media (max-width: 768px) {
+  #productoModalContent {
+    width: 80%; /* Ajustar el tamaño del modal en tabletas */
+  }
+
+  #productoModalTitulo {
+    font-size: 1.3em; /* Ajustar el tamaño del título */
+  }
+
+  #productoModalDescripcion {
+    font-size: 1.1em; /* Ajustar el tamaño de la descripción */
+  }
+
+  #productoModalPrecio {
+    font-size: 1.3em; /* Ajustar el tamaño del precio */
+  }
+
+  #productoModalCarritoBtn, #productoModalCerrarBtn {
+    width: 100%; /* Botones ocupan todo el ancho en tabletas */
+    margin-top: 10px; /* Añadir un pequeño margen entre botones */
+  }
+}
+
+/* Para pantallas móviles (max-width: 576px) */
+@media (max-width: 576px) {
+  #productoModalContent {
+    width: 90%; /* Modal más pequeño en móviles */
+    padding: 15px;
+  }
+
+  #productoModalTitulo {
+    font-size: 1.2em; /* Ajustar el tamaño del título */
+  }
+
+  #productoModalDescripcion {
+    font-size: 1.1em; /* Ajustar el tamaño de la descripción */
+  }
+
+  #productoModalPrecio {
+    font-size: 1.3em; /* Ajustar el tamaño del precio */
+  }
+
+  #productoModalCarritoBtn, #productoModalCerrarBtn {
+    width: 100%; /* Botones ocupan todo el ancho en móviles */
+    padding: 12px 0; /* Aumentar padding para botones móviles */
+    font-size: 1.2rem;
+  }
+}

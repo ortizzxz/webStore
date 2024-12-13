@@ -1,0 +1,200 @@
+@import './variables.css';
+
+#productos {
+  display: none;
+}
+
+/* Contenedor de los productos */
+.productos-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Flexibilidad de las columnas */
+  gap: 2rem; /* Espacio entre los productos */
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* Título de la categoría de productos */
+#productoCategoriaTitulo {
+  margin-top: 1rem;
+  margin-bottom: 0;
+  font-weight: 400;
+  font-size: 2.5rem;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+/* Producto individual */
+.producto {
+  background-color: var(--third-color);
+  border-radius: 10px;
+  border: 1px solid rgb(240, 211, 211);
+  padding: 0.5rem;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: var(--primary-color);
+}
+
+.producto:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen del producto */
+.producto-imagenes {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.producto-carrusel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.producto-carrusel-imagenes {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.producto-imagen {
+  width: 100%;
+  height: auto;
+  display: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.producto-imagen.active {
+  display: block;
+}
+
+/* Botones de flecha */
+.flecha {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-size: 2rem;
+  border: none;
+  padding: 0.2rem;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  border-radius: 1rem;
+  transition: background-color 0.3s;
+}
+
+.flecha:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.flecha-izquierda {
+  left: 10px;
+}
+
+.flecha-derecha {
+  right: 10px;
+}
+
+/* Estilo del título y el precio del producto */
+.producto h3 {
+  font-size: 1.4rem;
+  margin-top: 1rem;
+  color: var(--primary-color);
+  font-weight: 400;
+}
+
+.producto p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  font-weight: 400;
+}
+
+/* Botones de compra y descripción */
+.btn-comprar, .btn-descripcion {
+  margin-top: 0.2rem;
+  width: 90%;
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.4rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1rem;
+}
+
+.btn-comprar{
+  background-color: #28a745;
+}
+.btn-descripcion{
+  background-color: #b8a1a1;
+}
+
+.btn-comprar:hover, .btn-descripcion:hover {
+  transform: scale(1.05); /* Efecto de aumentar el tamaño al hacer hover */
+}
+
+/* Responsive Design */
+
+/* Para pantallas de tabletas (max-width: 768px) */
+@media (max-width: 768px) {
+  .productos-container {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Columnas adaptables en tabletas */
+  }
+
+  .producto {
+    padding: 1rem; /* Reducir padding de los productos en tabletas */
+  }
+
+  .producto h3 {
+    font-size: 1.2rem; /* Ajustar tamaño del título */
+  }
+
+  .producto p {
+    font-size: 1.1rem; /* Ajustar tamaño del precio */
+  }
+
+  .producto-imagenes {
+    height: 180px; /* Reducir altura de la imagen */
+  }
+
+  .btn-comprar, .btn-descripcion {
+    width: 48%; /* Botones más grandes en tabletas */
+    padding: 1rem;
+  }
+}
+
+/* Para pantallas móviles (max-width: 576px) */
+@media (max-width: 576px) {
+  .productos-container {
+    grid-template-columns: 1fr; /* 1 columna en móviles */
+  }
+
+  .producto {
+    padding: 0.8rem; /* Reducir padding aún más en móviles */
+  }
+
+  .producto h3 {
+    font-size: 1.1rem; /* Ajustar título más pequeño */
+  }
+
+  .producto p {
+    font-size: 1rem; /* Reducir tamaño del precio */
+  }
+
+  .producto-imagenes {
+    height: 220px; /* Ajustar la altura de la imagen */
+  }
+
+  .btn-comprar, .btn-descripcion {
+    width: 100%; /* Botones ocupan todo el ancho en móviles */
+    padding: 1rem 0; /* Ajuste en el padding para móviles */
+    font-size: 1.1rem; /* Ajustar tamaño de fuente para móviles */
+  }
+}

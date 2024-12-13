@@ -1,0 +1,93 @@
+@import './variables.css';
+
+footer {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  padding: 1rem;
+  text-align: center;
+}
+
+footer .footer-links ul {
+  list-style-type: none;
+  display: grid;
+  grid-auto-flow: column;
+  gap: var(--spacing);
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+footer .footer-links ul li a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: large;
+  transition: color 0.3s;
+  
+}
+
+footer .footer-links ul li a:hover {
+  color: var(--third-color);
+  background-color: var(--primary-color);
+  padding: 1rem;
+  border-radius: 0.2rem;
+}
+
+.iconos-redes i{
+  font-size: x-large;
+  border-radius: 0.3rem;
+  padding: 1rem;
+  color: var(--primary-color);
+
+}
+
+.iconos-redes i:hover{
+  background-color: var(--third-color) ;
+}
+
+/* Media Queries for Mobile Devices */
+@media screen and (max-width: 768px) {
+  footer {
+    padding: 1rem; /* Reduce padding for smaller screens */
+  }
+
+  footer .footer-links ul {
+    grid-template-columns: 1fr 1fr; /* Stack links in two columns */
+    grid-gap: 1rem;
+    justify-items: center; /* Center align links */
+  }
+
+  footer .footer-links ul li a {
+    font-size: 1rem; /* Adjust font size for mobile */
+  }
+
+  .iconos-redes {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* Add some spacing between icons */
+  }
+
+  .iconos-redes i {
+    font-size: 1.5rem; /* Adjust the size of the icons */
+    padding: 0.75rem; /* Reduced padding */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  footer {
+    padding: 1rem; /* Adjust padding for very small screens */
+  }
+
+  footer .footer-links ul {
+    grid-template-columns: 1fr; /* Stack all links vertically */
+    grid-gap: 0.5rem;
+  }
+
+  footer .footer-links ul li a {
+    font-size: 0.9rem; /* Adjust font size for very small screens */
+  }
+
+  .iconos-redes i {
+    font-size: 1.2rem; /* Smaller icons for very small screens */
+    padding: 0.5rem; /* Even smaller padding for very small screens */
+  }
+}

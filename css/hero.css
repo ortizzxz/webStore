@@ -1,0 +1,49 @@
+@import './variables.css';
+
+.hero {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  text-align: center;
+  margin: 0;
+}
+
+.hero h1 {
+  font-size: 3rem; 
+  font-weight: 200;
+}
+
+.hero p {
+  font-size: 2rem; 
+  font-weight: 300;
+}
+
+/* Responsive Design */
+
+/* Para tabletas (max-width: 768px) */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem; /* Reducir tamaño del título */
+  }
+
+  .hero p {
+    font-size: 1.2rem; /* Reducir tamaño del subtítulo */
+  }
+}
+
+/* Para móviles (max-width: 576px) */
+@media (max-width: 576px) {
+  .hero h1 {
+    font-size: 2rem; /* Reducir aún más el tamaño del título */
+  }
+
+  .hero p {
+    font-size: 1.5rem; /* Reducir el tamaño del subtítulo */
+  }
+
+  .hero {
+    padding: 1rem; /* Reducir el padding en pantallas pequeñas */
+  }
+}
