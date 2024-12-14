@@ -1,5 +1,5 @@
 # Proyecto de Tienda de Películas
-- Este proyecto es una tienda de películas en línea que utiliza la API Platzi Fake Store para simular un comercio electrónico. La aplicación está construida con HTML, CSS y JavaScript, y se encuentra desplegada en GitHub Pages.
+- Este proyecto es una tienda en línea que utiliza la API Platzi Fake Store para simular un comercio electrónico. La aplicación está construida con HTML, CSS y JavaScript, y se encuentra desplegada en GitHub Pages.
 
 ## Características
 - Catálogo de películas obtenido de la API Platzi Fake Store
